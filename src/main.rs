@@ -19,14 +19,11 @@ fn main() {
     let input_contents = fs::read_to_string(input_path)
         .expect("Should have been able to read the file at path {:?}");
 
-    let puzzle_input: Vec<&str> = input_contents
-        .split(['\n'])
-        .map(|e| e.trim())
-        .collect();
+    let puzzle_input: Vec<&str> = input_contents.split(['\n']).map(|e| e.trim()).collect();
 
     match year_number {
         2020 => aoc_2020::run_day_number(day_number, &puzzle_input),
         2021 => aoc_2021::run_day_number(day_number, &puzzle_input),
-        _ => panic!("Invalid year number passed: [{:?}]", year_number)
+        _ => panic!("Invalid year number passed: [{:?}]", year_number),
     }
 }
