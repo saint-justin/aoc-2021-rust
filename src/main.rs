@@ -2,6 +2,7 @@ use std::{env, fs};
 
 mod aoc_2020;
 mod aoc_2021;
+mod aoc_2023;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -24,6 +25,7 @@ fn main() {
     match year_number {
         2020 => aoc_2020::run_day_number(day_number, &puzzle_input),
         2021 => aoc_2021::run_day_number(day_number, &puzzle_input),
+        2023 => aoc_2023::run_day_number(day_number, &puzzle_input),
         _ => panic!("Invalid year number passed: [{:?}]", year_number),
     }
 }
