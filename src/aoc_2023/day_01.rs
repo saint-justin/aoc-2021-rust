@@ -68,7 +68,7 @@ fn replace_ntext_with_nstr(calibration_string: &str) -> String {
     let mut updated_str: String = calibration_string.to_owned();
     for (target, char) in nums_as_str {
         match updated_str.find(target) {
-            Some(_index) => updated_str = updated_str.replace(target, char),
+            Some(_) => updated_str = updated_str.replace(target, char),
             None => continue,
         }
     }
