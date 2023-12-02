@@ -1,6 +1,7 @@
 mod day_01;
 mod day_02;
 mod day_03;
+mod day_04;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -22,14 +23,17 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
         }
 
         3 => {
-            let straight_line_collisions = day_03::count_tree_collisions(input);
+            let default_collisions = day_03::count_tree_collisions(input);
             let collision_product = day_03::count_tree_collision_product(input);
             println!("\n Day 3!");
-            println!(
-                "  Straight line colisions:     {:?}",
-                straight_line_collisions
-            );
+            println!("  Straight line colisions:     {:?}", default_collisions);
             println!("  Multiple collisions product: {:?}", collision_product);
+        }
+
+        4 => {
+            let valid_passports = day_04::count_valid_passports(input);
+            println!("\n Day 4!");
+            println!("  Valid passport count: {:?}", valid_passports);
         }
 
         _ => println!("Code for day {:?} undefined", day),
