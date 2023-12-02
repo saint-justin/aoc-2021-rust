@@ -1,4 +1,5 @@
 mod day_01;
+mod day_02;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -8,6 +9,14 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 1:");
             println!("  Calibration value sum:    {:?}", calibration_sum);
             println!("  Calibration text sum:     {:?}", calibration_text_sum);
+        }
+
+        2 => {
+            let valid_id_sum = day_02::possible_game_id_sum(input);
+            let power_sum = day_02::find_power_sum(input);
+            println!("\nDay 2:");
+            println!("  Valid ID sum:  {:?}", valid_id_sum);
+            println!("  Power sum:     {:?}", power_sum);
         }
         _ => println!("Code for day {:?} undefined", day),
     }
