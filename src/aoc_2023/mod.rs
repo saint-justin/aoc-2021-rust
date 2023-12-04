@@ -1,5 +1,6 @@
 mod day_01;
 mod day_02;
+mod day_03;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -17,6 +18,12 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 2:");
             println!("  Valid ID sum:  {:?}", valid_id_sum);
             println!("  Power sum:     {:?}", power_sum);
+        }
+
+        3 => {
+            let valid_parts_sum = day_03::valid_parts_sum(input);
+            println!("\nDay 3:");
+            println!("  Valid parts sum: {:?}", valid_parts_sum);
         }
         _ => println!("Code for day {:?} undefined", day),
     }
