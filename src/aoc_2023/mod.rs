@@ -1,6 +1,7 @@
 mod day_01;
 mod day_02;
 mod day_03;
+mod day_04;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -25,6 +26,13 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 3:");
             println!("  Valid parts sum: {:?}", valid_parts_sum);
         }
+
+        4 => {
+            let scratcher_points = day_04::calculate_scratcher_points(input);
+            println!("\nDay 4:");
+            println!("  Scratcher points: {}", scratcher_points);
+        }
+
         _ => println!("Code for day {:?} undefined", day),
     }
 }
