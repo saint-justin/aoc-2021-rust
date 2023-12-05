@@ -19,12 +19,12 @@ pub fn count_valid_passports(logs_input: &Vec<&str>) -> usize {
 }
 
 /// Day 4, Part 2
-/// 
-/// Uh oh, your solution worked but some passports with invalid data 
+///
+/// Uh oh, your solution worked but some passports with invalid data
 /// are starting to get through! Let's do some data validation on each
 /// field on top of validating the fields exist. With the new validation
 /// rules below, how many passports are valid?
-/// 
+///
 /// byr - four digits; at least 1920 and at most 2002.
 /// iyr - four digits; at least 2010 and at most 2020.
 /// eyr - four digits; at least 2020 and at most 2030.
@@ -59,7 +59,6 @@ fn generate_passports_from_dump(log_dump: &Vec<&str>) -> Vec<Passport> {
         }
     }
     passport_dumps_collapsed.push(temp_passport);
-    
 
     return passport_dumps_collapsed
         .into_iter()
@@ -113,12 +112,13 @@ impl Passport {
             return false;
         }
 
-
         return vec![
             Self::validate_year(&self.byr, 1920, 2002),
             Self::validate_year(&self.iyr, 2010, 2020),
             Self::validate_year(&self.eyr, 2020, 2030),
-        ].iter().all(|b| *b);
+        ]
+        .iter()
+        .all(|b| *b);
     }
 
     pub fn add_property(&mut self, new_property: &str) {
@@ -138,16 +138,22 @@ impl Passport {
     }
 
     fn validate_year(yr: &Option<String>, min: u32, max: u32) -> bool {
-        if yr.is_none() { return false }
-        if yr.as_ref().unwrap().len() != 4 { return false }
+        if yr.is_none() {
+            return false;
+        }
+        if yr.as_ref().unwrap().len() != 4 {
+            return false;
+        }
         match yr.as_ref().unwrap().parse::<u32>() {
             Ok(n) => return n >= min && n <= max,
-            Err(_) => return false
+            Err(_) => return false,
         }
     }
 
     fn validate_height(&self) -> bool {
-        if self.hgt.is_none() { return false }
+        if self.hgt.is_none() {
+            return false;
+        }
 
         return true;
     }

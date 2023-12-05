@@ -63,10 +63,16 @@ fn parse_game(game_data: &str) -> Game {
 }
 
 #[derive(Debug)]
-struct Game { id: u32, rounds: Vec<Round> }
+struct Game {
+    id: u32,
+    rounds: Vec<Round>,
+}
 impl Game {
     pub fn new(id: u32) -> Game {
-        Game { id, rounds: Vec::new() }
+        Game {
+            id,
+            rounds: Vec::new(),
+        }
     }
 
     pub fn is_valid(&self) -> bool {
@@ -83,10 +89,18 @@ impl Game {
 }
 
 #[derive(Debug)]
-struct Round { red: u32, green: u32, blue: u32 }
+struct Round {
+    red: u32,
+    green: u32,
+    blue: u32,
+}
 impl Round {
     pub fn new() -> Round {
-        Round { red: 0, green: 0, blue: 0, }
+        Round {
+            red: 0,
+            green: 0,
+            blue: 0,
+        }
     }
 
     pub fn update_color(&mut self, color: &str, value: u32) {

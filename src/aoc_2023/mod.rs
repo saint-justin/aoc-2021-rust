@@ -13,7 +13,7 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("  Calibration text sum:     {:?}", calibration_text_sum);
         }
 
-        2 => {
+        2 => {  
             let valid_id_sum = day_02::possible_game_id_sum(input);
             let power_sum = day_02::find_power_sum(input);
             println!("\nDay 2:");
@@ -29,8 +29,10 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
 
         4 => {
             let scratcher_points = day_04::calculate_scratcher_points(input);
+            let scratcher_cards = day_04::sum_total_scratchers(input);
             println!("\nDay 4:");
             println!("  Scratcher points: {}", scratcher_points);
+            println!("  Scratcher cards:  {}", scratcher_cards);
         }
 
         _ => println!("Code for day {:?} undefined", day),
