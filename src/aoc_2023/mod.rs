@@ -2,6 +2,7 @@ mod day_01;
 mod day_02;
 mod day_03;
 mod day_04;
+mod day_05;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -33,6 +34,12 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 4:");
             println!("  Scratcher points: {}", scratcher_points);
             println!("  Scratcher cards:  {}", scratcher_cards);
+        }
+
+        5 => {
+            let lowest_seed_local = day_05::find_lowest_initial_seed_location(input);
+            println!("\nDay 5:");
+            println!("  Lowest initial seed location: {}", lowest_seed_local);
         }
 
         _ => println!("Code for day {:?} undefined", day),
