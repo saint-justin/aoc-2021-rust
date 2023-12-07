@@ -53,20 +53,22 @@ pub fn sum_total_scratchers(scratch_cards: &Vec<&str>) -> usize {
     let re = Regex::new("([0-9]{1,})").unwrap();
     let mut cards: HashMap<usize, usize> = HashMap::new(); // <card_id,card_count>
 
-    for i in 1 ..= scratch_cards.len() {
-		cards.insert(i, 1);
-	}
+    for i in 1..=scratch_cards.len() {
+        cards.insert(i, 1);
+    }
 
-    for i in 1 ..= scratch_cards.len() {
-        let scratcher_parts: Vec<&str> = scratch_cards[i-1].split([':', '|']).collect();
+    for i in 1..=scratch_cards.len() {
+        let scratcher_parts: Vec<&str> = scratch_cards[i - 1].split([':', '|']).collect();
         let winners = parse_nums(scratcher_parts[1], &re);
         let picks = parse_nums(scratcher_parts[2], &re);
         let found_winners = picks.iter().filter(|n| winners.contains(n)).count();
-        if found_winners == 0 { continue }
+        if found_winners == 0 {
+            continue;
+        }
 
         let cards_to_add = cards.get(&(i)).unwrap().clone();
         for j in 1..found_winners + 1 {
-            cards.insert(i+j, cards.get(&(i+j)).unwrap() + cards_to_add);
+            cards.insert(i + j, cards.get(&(i + j)).unwrap() + cards_to_add);
         }
     }
 
@@ -75,5 +77,7 @@ pub fn sum_total_scratchers(scratch_cards: &Vec<&str>) -> usize {
 
 // Helpers
 fn parse_nums(s: &str, re: &Regex) -> Vec<u32> {
-    re.find_iter(s).filter_map(|digits| digits.as_str().parse().ok()).collect()
+    re.find_iter(s)
+        .filter_map(|digits| digits.as_str().parse().ok())
+        .collect()
 }

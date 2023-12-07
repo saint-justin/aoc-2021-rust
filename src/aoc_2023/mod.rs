@@ -15,7 +15,7 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("  Calibration text sum:     {:?}", calibration_text_sum);
         }
 
-        2 => {  
+        2 => {
             let valid_id_sum = day_02::possible_game_id_sum(input);
             let power_sum = day_02::find_power_sum(input);
             println!("\nDay 2:");
@@ -47,8 +47,14 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let record_breaking_product = day_06::find_multisolution_product(input);
             let large_input_solutions = day_06::find_large_input_solutions(input);
             println!("\nDay 6:");
-            println!("  Lowest record-breaking product: {}", record_breaking_product);
-            println!("  Lowest record-breaking product: {}", large_input_solutions);
+            println!(
+                "  Lowest record-breaking product: {}",
+                record_breaking_product
+            );
+            println!(
+                "  Lowest record-breaking product: {}",
+                large_input_solutions
+            );
         }
 
         _ => println!("Code for day {:?} undefined", day),
