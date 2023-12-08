@@ -4,6 +4,7 @@ mod day_03;
 mod day_04;
 mod day_05;
 mod day_06;
+mod day_07;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -27,6 +28,7 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let valid_parts_sum = day_03::valid_parts_sum(input);
             println!("\nDay 3:");
             println!("  Valid parts sum: {:?}", valid_parts_sum);
+            // TODO: D3 P2
         }
 
         4 => {
@@ -41,20 +43,23 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let lowest_seed_local = day_05::find_lowest_initial_seed_location(input);
             println!("\nDay 5:");
             println!("  Lowest initial seed location: {}", lowest_seed_local);
+            // TODO: D5 P2
         }
 
         6 => {
             let record_breaking_product = day_06::find_multisolution_product(input);
-            let large_input_solutions = day_06::find_large_input_solutions(input);
+            let large_input_solutions = day_06::find_solution_large_input(input);
             println!("\nDay 6:");
-            println!(
-                "  Lowest record-breaking product: {}",
-                record_breaking_product
-            );
-            println!(
-                "  Lowest record-breaking product: {}",
-                large_input_solutions
-            );
+            println!("  Record product:        {}", record_breaking_product);
+            println!("  Record merged product: {}", large_input_solutions);
+        }
+
+        7 => {
+            let total_winnings = day_07::find_camel_poker_winnings(input);
+            let wild_winnings = day_07::hand_winnings_with_jokers(input);
+            println!("\nDay 7:");
+            println!("  Camel poker winnings (str):  {}", total_winnings);
+            println!("  Camel poker winnings (wild): {}", wild_winnings);
         }
 
         _ => println!("Code for day {:?} undefined", day),

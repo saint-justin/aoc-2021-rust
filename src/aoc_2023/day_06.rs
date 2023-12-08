@@ -58,7 +58,7 @@ pub fn find_multisolution_product(record_sheet: &Vec<&str>) -> u64 {
 /// to cover 9mm, 40mm, and 200mm, it's actually one HUGE race where you
 /// have 71530s to cover 940200mm. Given this new info, how many ways
 /// are there for you to win this new race?
-pub fn find_large_input_solutions(record_sheet: &Vec<&str>) -> u64 {
+pub fn find_solution_large_input(record_sheet: &Vec<&str>) -> u64 {
     let re = Regex::new("([0-9]{1,})").unwrap();
     let time_distance = record_sheet
         .iter()
@@ -123,7 +123,7 @@ fn test_find_large() {
         .map(|e| e.trim())
         .collect();
 
-    assert_eq!(find_large_input_solutions(&input1), 4);
-    assert_eq!(find_large_input_solutions(&input2), 8);
-    assert_eq!(find_large_input_solutions(&input3), 9);
+    assert_eq!(find_solution_large_input(&input1), 4);
+    assert_eq!(find_solution_large_input(&input2), 8);
+    assert_eq!(find_solution_large_input(&input3), 9);
 }
