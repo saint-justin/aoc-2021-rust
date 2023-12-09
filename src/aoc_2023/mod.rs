@@ -5,6 +5,7 @@ mod day_04;
 mod day_05;
 mod day_06;
 mod day_07;
+mod day_08;
 mod day_09;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
@@ -61,6 +62,14 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 7:");
             println!("  Camel poker winnings (str):  {}", total_winnings);
             println!("  Camel poker winnings (wild): {}", wild_winnings);
+        }
+
+        8 => {
+            let steps_to_zzz = day_08::find_steps_to_zzz(input);
+            let ghost_steps_to_zzz = day_08::ghost_traverse_to_exit_steps(input);
+            println!("\nDay 8:");
+            println!("  Steps to ZZZ: {}", steps_to_zzz);
+            println!("  Ghost steps to ZZZ: {}", ghost_steps_to_zzz);
         }
 
         9 => {
