@@ -5,6 +5,7 @@ mod day_04;
 mod day_05;
 mod day_06;
 mod day_07;
+mod day_09;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -60,6 +61,14 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 7:");
             println!("  Camel poker winnings (str):  {}", total_winnings);
             println!("  Camel poker winnings (wild): {}", wild_winnings);
+        }
+
+        9 => {
+            let extrapolated_sum = day_09::extrapolate_pattern_sum(input);
+            let extrapolated_rev_sum = day_09::extrapolate_pattern_sum_backward(input);
+            println!("\nDay 9:");
+            println!("  Extrapolated pattern sum: {}", extrapolated_sum);
+            println!("  Extrapolated pattern sum: {}", extrapolated_rev_sum);
         }
 
         _ => println!("Code for day {:?} undefined", day),
