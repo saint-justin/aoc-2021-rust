@@ -7,6 +7,7 @@ mod day_06;
 mod day_07;
 mod day_08;
 mod day_09;
+mod day_10;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -78,6 +79,12 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 9:");
             println!("  Extrapolated pattern sum: {}", extrapolated_sum);
             println!("  Extrapolated pattern sum: {}", extrapolated_rev_sum);
+        }
+
+        10 => {
+            let furthest_section = day_10::find_furthest_loop_section(input);
+            println!("\nDay 10:");
+            println!("  Furthest section from loop steps: {}", furthest_section);
         }
 
         _ => println!("Code for day {:?} undefined", day),
