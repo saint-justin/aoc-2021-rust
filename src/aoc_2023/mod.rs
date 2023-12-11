@@ -8,6 +8,7 @@ mod day_07;
 mod day_08;
 mod day_09;
 mod day_10;
+mod day_11;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -85,6 +86,14 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let furthest_section = day_10::find_furthest_loop_section(input);
             println!("\nDay 10:");
             println!("  Furthest section from loop steps: {}", furthest_section);
+        }
+
+        11 => {
+            let distance_sum = day_11::find_distance_sum(input);
+            let scaled_distance_sum = day_11::find_scaled_distance_sum(input);
+            println!("\nDay 11:");
+            println!("  Sum of gap 02 distances: {}", distance_sum);
+            println!("  Sum of gap 1m distances: {}", scaled_distance_sum);
         }
 
         _ => println!("Code for day {:?} undefined", day),
