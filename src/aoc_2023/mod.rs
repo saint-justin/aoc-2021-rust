@@ -32,7 +32,7 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let valid_parts_sum = day_03::valid_parts_sum(input);
             println!("\nDay 3:");
             println!("  Valid parts sum: {:?}", valid_parts_sum);
-            // TODO: D3 P2
+            // TODO: Day 3, Part 2
         }
 
         4 => {
@@ -47,7 +47,7 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let lowest_seed_local = day_05::find_lowest_initial_seed_location(input);
             println!("\nDay 5:");
             println!("  Lowest initial seed location: {}", lowest_seed_local);
-            // TODO: D5 P2
+            // TODO: Day 5, Part 2
         }
 
         6 => {
@@ -86,6 +86,7 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let furthest_section = day_10::find_furthest_loop_section(input);
             println!("\nDay 10:");
             println!("  Furthest section from loop steps: {}", furthest_section);
+            // TODO:  Day 10, Part 2
         }
 
         11 => {
