@@ -9,6 +9,7 @@ mod day_08;
 mod day_09;
 mod day_10;
 mod day_11;
+mod day_12;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -95,6 +96,12 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 11:");
             println!("  Sum of gap 02 distances: {}", distance_sum);
             println!("  Sum of gap 1m distances: {}", scaled_distance_sum);
+        }
+
+        12 => {
+            let arrangement_sum = day_12::find_arrangement_sum(input);
+            println!("\nDay 12");
+            println!("  Total possible arrangements: {}", arrangement_sum);
         }
 
         _ => println!("Code for day {:?} undefined", day),
