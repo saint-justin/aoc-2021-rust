@@ -10,6 +10,7 @@ mod day_09;
 mod day_10;
 mod day_11;
 mod day_12;
+mod day_13;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -100,8 +101,16 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
 
         12 => {
             let arrangement_sum = day_12::find_arrangement_sum(input);
-            println!("\nDay 12");
+            println!("\nDay 12:");
             println!("  Total possible arrangements: {}", arrangement_sum);
+        }
+
+        13 =>  {
+            // let reflection_summary = day_13::find_reflection_summary(input);
+            let smudged_summary = day_13::find_smudged_reflection_summary(input);
+            println!("\nDay 13:");
+            // println!("  Reflection summary: {}", reflection_summary);
+            println!("  Smudged summary:    {}", smudged_summary);
         }
 
         _ => println!("Code for day {:?} undefined", day),
