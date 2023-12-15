@@ -1,5 +1,3 @@
-use std::thread::panicking;
-
 use itertools::Itertools;
 
 /// Day 13, Part 1 -- https://adventofcode.com/2023/day/13

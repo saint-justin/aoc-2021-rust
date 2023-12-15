@@ -11,6 +11,7 @@ mod day_10;
 mod day_11;
 mod day_12;
 mod day_13;
+mod day_14;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -111,6 +112,14 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 13:");
             // println!("  Reflection summary: {}", reflection_summary);
             println!("  Smudged summary:    {}", smudged_summary);
+        }
+
+        14 => {
+            let northern_load = day_14::calculate_north_load(input);
+            let load_after_1b = day_14::calculate_north_load_after_1b_cycles(input);
+            println!("\nDay 14:");
+            println!("  Total load on north wall:                 {}", northern_load);
+            println!("  Total load on north wall after 1B cycles: {}", load_after_1b);
         }
 
         _ => println!("Code for day {:?} undefined", day),
