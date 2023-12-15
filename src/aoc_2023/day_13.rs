@@ -1,20 +1,20 @@
 use itertools::Itertools;
 
 /// Day 13, Part 1 -- https://adventofcode.com/2023/day/13
-/// 
+///
 /// You've made it to lava island, but it turns out it's REALLY
 /// difficult to get everywhere because this place is completely
 /// full of mirrors. Anywhere you look you see one gigantic
 /// mirror or another which makes it really hard to tell whether
 /// you're about to step onto a rock or into a laval stream.
-/// 
+///
 /// To help solve this issue, you took a collection of patterns
-/// of ash (.) and rock (#) that you see as you walk. By analyzing 
+/// of ash (.) and rock (#) that you see as you walk. By analyzing
 /// the ash and rock, you can tell where mirrors are by finding
-/// what part of the samples are reflected. 
-/// 
+/// what part of the samples are reflected.
+///
 ///   Ex_1:        Ex_2:
-///  123456789 
+///  123456789
 ///  #.##..##.   1 #...##..# 1
 ///  ..#.##.#.   2 #....#..# 2
 ///  ##......#   3 ..##..### 3
@@ -23,11 +23,11 @@ use itertools::Itertools;
 ///  ..##..##.   6 ..##..### 6
 ///  #.#.##.#.   7 #....#..# 7
 ///  123456789
-/// 
-/// For example, in Ex_1 above, the inflection point is between 
+///
+/// For example, in Ex_1 above, the inflection point is between
 /// characters 5 & 6 on the horizontal axis. In addition, in
-/// Ex_2 you can find the inflection point between rows 4 & 5. 
-/// 
+/// Ex_2 you can find the inflection point between rows 4 & 5.
+///
 /// For each given pattern, if a reflection is over a vertical
 /// axis, add the amount of rows to the left of it to the point
 /// sum. For each horizontal reflection, add the amount of rows
@@ -46,7 +46,8 @@ pub fn find_reflection_summary(all_patterns: &Vec<&str>) -> u32 {
     }
 
     // Check each map and calculate its point value by its inflection point
-    separated_maps.iter()
+    separated_maps
+        .iter()
         .map(|pattern| find_inflection_point(pattern))
         .enumerate()
         .fold(0, |acc, (i, ip)| {
@@ -55,18 +56,17 @@ pub fn find_reflection_summary(all_patterns: &Vec<&str>) -> u32 {
         })
 }
 
-
 /// Day 13, Part 2
-/// 
+///
 /// Ok so the plan was going great from part one right until you walked
-/// DIRECTLY into another mirror. It turns out, each of the input 
+/// DIRECTLY into another mirror. It turns out, each of the input
 /// patterns have a single smudge meaning that one position that should
 /// be a (.) is actually a (#) or vice versa. Given this new information,
-/// locate and fix the smudge that causes a different reflection line 
+/// locate and fix the smudge that causes a different reflection line
 /// to be valid and use the fixed maps to re-calculate the point sum
-/// of all pattern reflections. 
-/// 
-/// What's the new point sum? 
+/// of all pattern reflections.
+///
+/// What's the new point sum?
 pub fn find_smudged_reflection_summary(all_patterns: &Vec<&str>) -> u32 {
     let mut separated_maps: Vec<Vec<String>> = Vec::new();
     let mut temp_map: Vec<String> = Vec::new();
@@ -86,7 +86,7 @@ pub fn find_smudged_reflection_summary(all_patterns: &Vec<&str>) -> u32 {
         .collect_vec();
 
     println!("All inflection points found: {:?}", inflection_points);
-        
+
     inflection_points
         .iter()
         .enumerate()
@@ -95,7 +95,8 @@ pub fn find_smudged_reflection_summary(all_patterns: &Vec<&str>) -> u32 {
             let v = calculate_value_of_inflection_point(&ip);
             println!("IP Value: {}", v);
             v
-        }).sum()
+        })
+        .sum()
 }
 
 // vvv  Helper functions  vvv
@@ -108,14 +109,18 @@ fn find_and_replace_smudge(pattern: &Vec<String>) -> Vec<String> {
         let pattern_transpose = transpose_pattern(pattern);
         mismatch = find_smudge(&pattern_transpose).unwrap();
     }
-    
+
     println!("Found a mismatch! {:?}", mismatch);
     let mut new_pattern = pattern.clone();
     new_pattern[mismatch.row].replace_range(
-        mismatch.col .. mismatch.col + 1, 
-        if pattern[mismatch.row].chars().nth(mismatch.col).unwrap() == '#' { "." } else { "#" }
+        mismatch.col..mismatch.col + 1,
+        if pattern[mismatch.row].chars().nth(mismatch.col).unwrap() == '#' {
+            "."
+        } else {
+            "#"
+        },
     );
-    
+
     println!("\nBase pattern:");
     for line in pattern {
         println!("{}", line);
@@ -133,46 +138,55 @@ fn find_inflection_point(pattern: &Vec<String>) -> InflectionPoint {
     let mut inflection_points: Vec<InflectionPoint> = Vec::new();
     let pattern_transpose = transpose_pattern(pattern);
 
-    get_inflection_positions(pattern)
-        .iter()
-        .for_each(|pos| inflection_points.push(InflectionPoint::new(ReflectionType::Horizontal, *pos)));
+    get_inflection_positions(pattern).iter().for_each(|pos| {
+        inflection_points.push(InflectionPoint::new(ReflectionType::Horizontal, *pos))
+    });
 
     get_inflection_positions(&pattern_transpose)
         .iter()
-        .for_each(|pos| inflection_points.push(InflectionPoint::new(ReflectionType::Vertical, *pos)));
+        .for_each(|pos| {
+            inflection_points.push(InflectionPoint::new(ReflectionType::Vertical, *pos))
+        });
 
     println!("Inflection point found!");
     inflection_points[0]
 }
 
-
 // Returns any horizontal inflection point across a given pattern
 fn get_inflection_positions(pattern: &Vec<String>) -> Vec<usize> {
     let mut inflection_points: Vec<usize> = Vec::new();
-    for i in 1 .. pattern[0].len() {
+    for i in 1..pattern[0].len() {
         let max_width = pattern[0].len() / 2;
         if pattern.iter().all(|s| {
             let s1 = if i <= max_width { &s[0..i] } else { &s[i..] };
-            let s2 = if i <= max_width { &s[i..i*2] } else { &s[s.len()-(s1.len()*2) .. s.len() - s1.len()] };
+            let s2 = if i <= max_width {
+                &s[i..i * 2]
+            } else {
+                &s[s.len() - (s1.len() * 2)..s.len() - s1.len()]
+            };
             s1 == s2.chars().rev().collect::<String>()
         }) {
             inflection_points.push(i)
-        } 
+        }
     }
-    return inflection_points
+    return inflection_points;
 }
 
 // Returns any horizontal inflection point across a given pattern
 fn find_smudge(pattern: &Vec<String>) -> Option<Mismatch> {
-    for i in 1 .. pattern[0].len() {
+    for i in 1..pattern[0].len() {
         let mut mismatches: Vec<Mismatch> = Vec::new();
         let max_width = pattern[0].len() / 2;
         for s in pattern {
             let s1 = if i <= max_width { &s[0..i] } else { &s[i..] };
-            let s2: &str = if i <= max_width { &s[i..i*2] } else { &s[s.len()-(s1.len()*2) .. s.len() - s1.len()] };
-            for j in 0 .. s1.len() {
+            let s2: &str = if i <= max_width {
+                &s[i..i * 2]
+            } else {
+                &s[s.len() - (s1.len() * 2)..s.len() - s1.len()]
+            };
+            for j in 0..s1.len() {
                 if s1.chars().nth(j) != s2.chars().rev().nth(j) {
-                    mismatches.push(Mismatch::new(i-1, j))
+                    mismatches.push(Mismatch::new(i - 1, j))
                 }
             }
         }
@@ -180,11 +194,11 @@ fn find_smudge(pattern: &Vec<String>) -> Option<Mismatch> {
         // println!("  Mismatches found: {:?}", mismatches);
         if mismatches.len() == 1 {
             println!("Mismatch in reflection: {:?}", mismatches[0]);
-            return Some(mismatches[0])
+            return Some(mismatches[0]);
         }
     }
 
-    return None
+    return None;
 }
 
 // Transposes a given 2D matrix (via StackOverflow):
@@ -204,9 +218,10 @@ fn transpose<T>(v: Vec<Vec<T>>) -> Vec<Vec<T>> {
 }
 
 fn transpose_pattern(pattern: &Vec<String>) -> Vec<String> {
-    let pattern_2d = pattern.iter()
-            .map(|s| s.chars().map(|ch| ch.to_string()).collect_vec())
-            .collect_vec();
+    let pattern_2d = pattern
+        .iter()
+        .map(|s| s.chars().map(|ch| ch.to_string()).collect_vec())
+        .collect_vec();
 
     transpose(pattern_2d)
         .iter()
@@ -225,7 +240,7 @@ fn calculate_value_of_inflection_point(ip: &InflectionPoint) -> u32 {
 #[derive(Debug, Clone, Copy)]
 enum ReflectionType {
     Horizontal,
-    Vertical
+    Vertical,
 }
 
 #[derive(Debug, Clone, Copy)]

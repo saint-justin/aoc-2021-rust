@@ -106,7 +106,7 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("  Total possible arrangements: {}", arrangement_sum);
         }
 
-        13 =>  {
+        13 => {
             // let reflection_summary = day_13::find_reflection_summary(input);
             let smudged_summary = day_13::find_smudged_reflection_summary(input);
             println!("\nDay 13:");
@@ -118,8 +118,14 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let northern_load = day_14::calculate_north_load(input);
             let load_after_1b = day_14::calculate_north_load_after_1b_cycles(input);
             println!("\nDay 14:");
-            println!("  Total load on north wall:                 {}", northern_load);
-            println!("  Total load on north wall after 1B cycles: {}", load_after_1b);
+            println!(
+                "  Total load on north wall:                 {}",
+                northern_load
+            );
+            println!(
+                "  Total load on north wall after 1B cycles: {}",
+                load_after_1b
+            );
         }
 
         _ => println!("Code for day {:?} undefined", day),
