@@ -1,3 +1,5 @@
+use std::time::{SystemTime, UNIX_EPOCH};
+
 mod day_01;
 mod day_02;
 mod day_03;
@@ -13,6 +15,7 @@ mod day_12;
 mod day_13;
 mod day_14;
 mod day_15;
+mod day_16;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -129,6 +132,14 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 15:");
             println!("  Hash sum:       {}", sum_hash);
             println!("  Focusing power: {}", focusing_power);
+        }
+
+        16 => {
+            let energized_tiles = day_16::find_energized_tiles(input);
+            let max_tiles = day_16::find_max_energized_tiles(input);
+            println!("\nDay 16:");
+            println!("  Energized tiles: {}", energized_tiles);
+            println!("  Max energized tiles: {}", max_tiles);
         }
 
         _ => println!("Code for day {:?} undefined", day),
