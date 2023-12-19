@@ -60,7 +60,7 @@ pub fn calculate_lava_volume(dig_plan: &Vec<&str>) -> usize {
             .filter(|ch| ch != &'(' && ch != &')')
             .join("");
 
-        let (dir, distance, color) = cleaned_instructions
+        let (dir, distance, _color) = cleaned_instructions
             .split(" ")
             .filter(|s| s != &"")
             .collect_tuple()
@@ -75,7 +75,7 @@ pub fn calculate_lava_volume(dig_plan: &Vec<&str>) -> usize {
         };
 
         for _ in 0..distance.parse::<usize>().unwrap() {
-            current_pos = (current_pos.0 + current_dir.0, current_pos.1 + current_dir.1);
+            current_pos = v_add(current_pos, current_dir);
             edge_set.insert(current_pos);
         }
     }
