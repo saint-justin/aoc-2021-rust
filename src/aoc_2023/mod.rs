@@ -16,6 +16,7 @@ mod day_13;
 mod day_14;
 mod day_15;
 mod day_16;
+mod day_18;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -140,6 +141,13 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             println!("\nDay 16:");
             println!("  Energized tiles: {}", energized_tiles);
             println!("  Max energized tiles: {}", max_tiles);
+        }
+
+        // Day 17 is pathfinding, skipping it for now.
+        18 => {
+            let lava_valume = day_18::calculate_lava_volume(input);
+            println!("\nDay 18:");
+            println!("  Lava Volume for digsite: {}", lava_valume);
         }
 
         _ => println!("Code for day {:?} undefined", day),
