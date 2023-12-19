@@ -6,7 +6,10 @@ const SOUTH: Vector2D = (1, 0);
 const EAST: Vector2D = (0, 1);
 const WEST: Vector2D = (0, -1);
 
-/// Day 16, Part 1
+/// Day 16, Part 1 -- https://adventofcode.com/2023/day/16
+/// 
+/// Prompt is very large, see markdown file:
+/// src\aoc_2023\prompts\day_17.md
 pub fn find_energized_tiles(floor_map: &Vec<&str>) -> usize {
     let map = floor_map
         .iter()
@@ -26,6 +29,7 @@ pub fn find_energized_tiles(floor_map: &Vec<&str>) -> usize {
     }
 }
 
+/// Day 16, Part 2
 pub fn find_max_energized_tiles(floor_map: &Vec<&str>) -> usize {
     let map = floor_map
         .iter()
