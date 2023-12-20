@@ -17,6 +17,7 @@ mod day_14;
 mod day_15;
 mod day_16;
 mod day_18;
+mod day_19;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -145,9 +146,15 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
 
         // Day 17 is pathfinding, skipping it for now.
         18 => {
-            let lava_valume = day_18::calculate_lava_volume(input);
+            let lava_volume = day_18::calculate_lava_volume(input);
             println!("\nDay 18:");
-            println!("  Lava Volume for digsite: {}", lava_valume);
+            println!("  Lava Volume for digsite: {}", lava_volume);
+        }
+
+        19 => {
+            let accepted_part_sum = day_19::accepted_part_rating_sum(input);
+            println!("\nDay 19:");
+            println!("  Accepted Part Rating Sum: {}", accepted_part_sum);
         }
 
         _ => println!("Code for day {:?} undefined", day),
