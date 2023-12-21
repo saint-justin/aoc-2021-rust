@@ -17,6 +17,7 @@ mod day_16;
 mod day_18;
 mod day_19;
 mod day_20;
+mod day_21;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -160,6 +161,12 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let frequency_product = day_20::find_frequency_product(input);
             println!("\nDay 20:");
             println!("  Pulse frequency product: {}", frequency_product)
+        }
+
+        21 => {
+            let accessible_plots = day_21::find_accessible_gardening_plots(input);
+            println!("\nDay 21:");
+            println!("  Accessible plots: {}", accessible_plots);
         }
 
         _ => println!("Code for day {:?} undefined", day),

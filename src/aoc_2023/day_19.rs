@@ -88,7 +88,10 @@ fn evaluate_workflow(part: &Part, workflows: &Vec<String>, re: &Regex) -> String
         }
     }
 
-    panic!("Invalid workflow evaluation state for part {:?}: {:?}", part, workflows);
+    panic!(
+        "Invalid workflow evaluation state for part {:?}: {:?}",
+        part, workflows
+    );
 }
 
 #[derive(Debug, Clone, Copy)]
