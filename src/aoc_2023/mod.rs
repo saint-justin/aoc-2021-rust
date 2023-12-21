@@ -1,5 +1,3 @@
-use std::time::{SystemTime, UNIX_EPOCH};
-
 mod day_01;
 mod day_02;
 mod day_03;
@@ -18,6 +16,7 @@ mod day_15;
 mod day_16;
 mod day_18;
 mod day_19;
+mod day_20;
 
 pub fn run_day_number(day: u32, input: &Vec<&str>) {
     match day {
@@ -155,6 +154,12 @@ pub fn run_day_number(day: u32, input: &Vec<&str>) {
             let accepted_part_sum = day_19::accepted_part_rating_sum(input);
             println!("\nDay 19:");
             println!("  Accepted Part Rating Sum: {}", accepted_part_sum);
+        }
+
+        20 => {
+            let frequency_product = day_20::find_frequency_product(input);
+            println!("\nDay 20:");
+            println!("  Pulse frequency product: {}", frequency_product)
         }
 
         _ => println!("Code for day {:?} undefined", day),
