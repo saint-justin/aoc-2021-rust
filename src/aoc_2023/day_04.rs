@@ -19,22 +19,22 @@ use std::collections::HashMap;
 /// Card 2: 13 32 20 16 61 | 61 30 68 82 17 32 24 19
 /// Card 3:  1 21 53 59 44 | 69 82 63 72 16 21 14  1
 pub fn calculate_scratcher_points(scratcher: &Vec<&str>) -> u32 {
-    let re = Regex::new("([0-9]{1,})").unwrap();
+  let re = Regex::new("([0-9]{1,})").unwrap();
 
-    return scratcher
-        .iter()
-        .map(|line| {
-            let scratcher_parts: Vec<&str> = line.split([':', '|']).collect();
-            let winners: Vec<u32> = parse_nums(scratcher_parts[1], &re);
-            let picks: Vec<u32> = parse_nums(scratcher_parts[2], &re);
-            let found_winners = picks.iter().filter(|n| winners.contains(n)).count();
-            if found_winners > 0 {
-                return 2_u32.pow((found_winners - 1).try_into().unwrap());
-            } else {
-                return 0;
-            }
-        })
-        .sum();
+  return scratcher
+    .iter()
+    .map(|line| {
+      let scratcher_parts: Vec<&str> = line.split([':', '|']).collect();
+      let winners: Vec<u32> = parse_nums(scratcher_parts[1], &re);
+      let picks: Vec<u32> = parse_nums(scratcher_parts[2], &re);
+      let found_winners = picks.iter().filter(|n| winners.contains(n)).count();
+      if found_winners > 0 {
+        return 2_u32.pow((found_winners - 1).try_into().unwrap());
+      } else {
+        return 0;
+      }
+    })
+    .sum();
 }
 
 /// Day 4, Part 2
@@ -50,34 +50,34 @@ pub fn calculate_scratcher_points(scratcher: &Vec<&str>) -> u32 {
 /// How many cards (including all the original scratch cards) do you
 /// end up with?
 pub fn sum_total_scratchers(scratch_cards: &Vec<&str>) -> usize {
-    let re = Regex::new("([0-9]{1,})").unwrap();
-    let mut cards: HashMap<usize, usize> = HashMap::new(); // <card_id,card_count>
+  let re = Regex::new("([0-9]{1,})").unwrap();
+  let mut cards: HashMap<usize, usize> = HashMap::new(); // <card_id,card_count>
 
-    for i in 1..=scratch_cards.len() {
-        cards.insert(i, 1);
+  for i in 1..=scratch_cards.len() {
+    cards.insert(i, 1);
+  }
+
+  for i in 1..=scratch_cards.len() {
+    let scratcher_parts: Vec<&str> = scratch_cards[i - 1].split([':', '|']).collect();
+    let winners = parse_nums(scratcher_parts[1], &re);
+    let picks = parse_nums(scratcher_parts[2], &re);
+    let found_winners = picks.iter().filter(|n| winners.contains(n)).count();
+    if found_winners == 0 {
+      continue;
     }
 
-    for i in 1..=scratch_cards.len() {
-        let scratcher_parts: Vec<&str> = scratch_cards[i - 1].split([':', '|']).collect();
-        let winners = parse_nums(scratcher_parts[1], &re);
-        let picks = parse_nums(scratcher_parts[2], &re);
-        let found_winners = picks.iter().filter(|n| winners.contains(n)).count();
-        if found_winners == 0 {
-            continue;
-        }
-
-        let cards_to_add = cards.get(&(i)).unwrap().clone();
-        for j in 1..found_winners + 1 {
-            cards.insert(i + j, cards.get(&(i + j)).unwrap() + cards_to_add);
-        }
+    let cards_to_add = cards.get(&(i)).unwrap().clone();
+    for j in 1..found_winners + 1 {
+      cards.insert(i + j, cards.get(&(i + j)).unwrap() + cards_to_add);
     }
+  }
 
-    return cards.values().map(|n| *n).sum();
+  return cards.values().map(|n| *n).sum();
 }
 
 // Helpers
 fn parse_nums(s: &str, re: &Regex) -> Vec<u32> {
-    re.find_iter(s)
-        .filter_map(|digits| digits.as_str().parse().ok())
-        .collect()
+  re.find_iter(s)
+    .filter_map(|digits| digits.as_str().parse().ok())
+    .collect()
 }

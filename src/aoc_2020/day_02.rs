@@ -1,9 +1,9 @@
 #[derive(Debug)]
 struct PasswordValidation {
-    n1: usize,
-    n2: usize,
-    character: String,
-    password: String,
+  n1: usize,
+  n2: usize,
+  character: String,
+  password: String,
 }
 
 /// Day 2, Part 1 -- https://adventofcode.com/2020/day/2
@@ -26,17 +26,17 @@ struct PasswordValidation {
 /// To determine the severity of the database corruption,
 /// how many of the passwords are valid according to their policies?
 pub fn find_valid_passwords_by_count(password_inputs: &Vec<&str>) -> usize {
-    let pwvalidation_objects: Vec<PasswordValidation> = password_inputs
-        .into_iter()
-        .map(|str| parse_string_to_pwvalidation(str))
-        .collect();
+  let pwvalidation_objects: Vec<PasswordValidation> = password_inputs
+    .into_iter()
+    .map(|str| parse_string_to_pwvalidation(str))
+    .collect();
 
-    let valid_passwords = pwvalidation_objects.into_iter().filter(|pwval| {
-        let target_char_count = pwval.password.matches(&pwval.character).count();
-        return target_char_count <= pwval.n2 && target_char_count >= pwval.n1;
-    });
+  let valid_passwords = pwvalidation_objects.into_iter().filter(|pwval| {
+    let target_char_count = pwval.password.matches(&pwval.character).count();
+    return target_char_count <= pwval.n2 && target_char_count >= pwval.n1;
+  });
 
-    return valid_passwords.count();
+  return valid_passwords.count();
 }
 
 /// Day 2, Part 2
@@ -52,44 +52,44 @@ pub fn find_valid_passwords_by_count(password_inputs: &Vec<&str>) -> usize {
 ///
 /// How many passwords are valid given the new interpretation of the policy?
 pub fn find_valid_passwords_by_position(password_inputs: &Vec<&str>) -> usize {
-    let pwvalidation_objects: Vec<PasswordValidation> = password_inputs
-        .into_iter()
-        .map(|str| parse_string_to_pwvalidation(str))
-        .collect();
+  let pwvalidation_objects: Vec<PasswordValidation> = password_inputs
+    .into_iter()
+    .map(|str| parse_string_to_pwvalidation(str))
+    .collect();
 
-    let valid_passwords = pwvalidation_objects
-        .into_iter()
-        .filter(|pwval| password_valid_by_position(&pwval));
+  let valid_passwords = pwvalidation_objects
+    .into_iter()
+    .filter(|pwval| password_valid_by_position(&pwval));
 
-    return valid_passwords.count();
+  return valid_passwords.count();
 }
 
 // Helper to parse string into a more manageable struct
 fn parse_string_to_pwvalidation(input_str: &str) -> PasswordValidation {
-    let input_split: Vec<&str> = input_str.split(" ").collect();
-    let min_max_split: Vec<&str> = input_split[0].split("-").collect();
+  let input_split: Vec<&str> = input_str.split(" ").collect();
+  let min_max_split: Vec<&str> = input_split[0].split("-").collect();
 
-    PasswordValidation {
-        n1: min_max_split[0].parse::<usize>().unwrap(),
-        n2: min_max_split[1].parse::<usize>().unwrap(),
-        character: input_split[1][0..1].to_owned(),
-        password: input_split[2].to_owned(),
-    }
+  PasswordValidation {
+    n1: min_max_split[0].parse::<usize>().unwrap(),
+    n2: min_max_split[1].parse::<usize>().unwrap(),
+    character: input_split[1][0..1].to_owned(),
+    password: input_split[2].to_owned(),
+  }
 }
 
 // Helper to determine if a password is valid based on its position
 fn password_valid_by_position(pwval: &PasswordValidation) -> bool {
-    let char_1 = pwval.password.chars().nth(pwval.n1 - 1);
-    let char_2 = pwval.password.chars().nth(pwval.n2 - 1);
-    let target_char: char = pwval.character.chars().collect::<Vec<char>>()[0];
+  let char_1 = pwval.password.chars().nth(pwval.n1 - 1);
+  let char_2 = pwval.password.chars().nth(pwval.n2 - 1);
+  let target_char: char = pwval.character.chars().collect::<Vec<char>>()[0];
 
-    if char_1.is_none() && char_2.is_none() {
-        return false;
-    } else if char_1.is_some() && char_2.is_some() {
-        return (char_1.unwrap() == target_char) ^ (char_2.unwrap() == target_char);
-    } else if char_1.is_some() {
-        return char_1.unwrap() == target_char;
-    } else {
-        return char_2.unwrap() == target_char;
-    }
+  if char_1.is_none() && char_2.is_none() {
+    return false;
+  } else if char_1.is_some() && char_2.is_some() {
+    return (char_1.unwrap() == target_char) ^ (char_2.unwrap() == target_char);
+  } else if char_1.is_some() {
+    return char_1.unwrap() == target_char;
+  } else {
+    return char_2.unwrap() == target_char;
+  }
 }

@@ -11,37 +11,37 @@
 /// "down 3"    -> y position += 3
 /// "up 6"      -> y position -= 6
 pub fn find_positional_product(logs_input: &Vec<&str>) -> u32 {
-    let mut x_pos = 0;
-    let mut y_pos = 0;
+  let mut x_pos = 0;
+  let mut y_pos = 0;
 
-    for item in logs_input {
-        let args: Vec<&str> = item.split(" ").collect();
-        let amount = args[1].parse::<u32>().unwrap();
-        match args[0] {
-            "forward" => x_pos += amount,
-            "down" => y_pos += amount,
-            "up" => y_pos -= amount,
-            _ => panic!("Invalid command type!"),
-        }
+  for item in logs_input {
+    let args: Vec<&str> = item.split(" ").collect();
+    let amount = args[1].parse::<u32>().unwrap();
+    match args[0] {
+      "forward" => x_pos += amount,
+      "down" => y_pos += amount,
+      "up" => y_pos -= amount,
+      _ => panic!("Invalid command type!"),
     }
+  }
 
-    x_pos * y_pos
+  x_pos * y_pos
 }
 
 #[test]
 fn check_position_depth_product() {
-    let input = vec![
-        "forward 5",
-        "down 5",
-        "forward 8",
-        "up 3",
-        "down 8",
-        "forward 2",
-    ];
+  let input = vec![
+    "forward 5",
+    "down 5",
+    "forward 8",
+    "up 3",
+    "down 8",
+    "forward 2",
+  ];
 
-    let actual = find_positional_product(&input);
-    let expected: u32 = 150; // x_pos 15 * y_pos 10 => 150
-    assert_eq!(actual, expected);
+  let actual = find_positional_product(&input);
+  let expected: u32 = 150; // x_pos 15 * y_pos 10 => 150
+  assert_eq!(actual, expected);
 }
 
 /// Day 2, Part 2
@@ -59,39 +59,39 @@ fn check_position_depth_product() {
 ///             -> y position += aim*5
 
 pub fn find_aimed_product(logs_input: &Vec<&str>) -> u32 {
-    let mut aim = 0;
-    let mut x_pos = 0;
-    let mut y_pos = 0;
+  let mut aim = 0;
+  let mut x_pos = 0;
+  let mut y_pos = 0;
 
-    for item in logs_input {
-        let args: Vec<&str> = item.split(" ").collect();
-        let amount = args[1].parse::<u32>().unwrap();
-        match args[0] {
-            "forward" => {
-                x_pos += amount;
-                y_pos += amount * aim;
-            }
-            "down" => aim += amount,
-            "up" => aim -= amount,
-            _ => panic!("Invalid command type!"),
-        }
+  for item in logs_input {
+    let args: Vec<&str> = item.split(" ").collect();
+    let amount = args[1].parse::<u32>().unwrap();
+    match args[0] {
+      "forward" => {
+        x_pos += amount;
+        y_pos += amount * aim;
+      }
+      "down" => aim += amount,
+      "up" => aim -= amount,
+      _ => panic!("Invalid command type!"),
     }
+  }
 
-    x_pos * y_pos
+  x_pos * y_pos
 }
 
 #[test]
 fn check_aimed_position_depth_product() {
-    let input = vec![
-        "forward 5",
-        "down 5",
-        "forward 8",
-        "up 3",
-        "down 8",
-        "forward 2",
-    ];
+  let input = vec![
+    "forward 5",
+    "down 5",
+    "forward 8",
+    "up 3",
+    "down 8",
+    "forward 2",
+  ];
 
-    let actual = find_aimed_product(&input);
-    let expected: u32 = 900; // x_pos 15 * y_pos 10 => 150
-    assert_eq!(actual, expected);
+  let actual = find_aimed_product(&input);
+  let expected: u32 = 900; // x_pos 15 * y_pos 10 => 150
+  assert_eq!(actual, expected);
 }

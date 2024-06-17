@@ -8,7 +8,7 @@ const SOUTH: Vector2D = (1, 0);
 const EAST: Vector2D = (0, 1);
 const WEST: Vector2D = (0, -1);
 fn v_add(v1: Vector2D, v2: Vector2D) -> Vector2D {
-    (v1.0 + v2.0, v1.1 + v2.1)
+  (v1.0 + v2.0, v1.1 + v2.1)
 }
 
 /// Day 18, Part 1 -- https://adventofcode.com/2023/day/18
@@ -50,60 +50,60 @@ fn v_add(v1: Vector2D, v2: Vector2D) -> Vector2D {
 /// 1m^2 of space for lava storage, how many m^2 of space are emptied
 /// according to the final input?
 pub fn calculate_lava_volume(dig_plan: &Vec<&str>) -> usize {
-    let mut edge_set: HashSet<Vector2D> = HashSet::new();
-    let mut current_pos: Vector2D = (0, 0);
-    edge_set.insert(current_pos);
+  let mut edge_set: HashSet<Vector2D> = HashSet::new();
+  let mut current_pos: Vector2D = (0, 0);
+  edge_set.insert(current_pos);
 
-    for instruction in dig_plan {
-        let cleaned_instructions = instruction
-            .chars()
-            .filter(|ch| ch != &'(' && ch != &')')
-            .join("");
+  for instruction in dig_plan {
+    let cleaned_instructions = instruction
+      .chars()
+      .filter(|ch| ch != &'(' && ch != &')')
+      .join("");
 
-        let (dir, distance, _color) = cleaned_instructions
-            .split(" ")
-            .filter(|s| s != &"")
-            .collect_tuple()
-            .unwrap();
+    let (dir, distance, _color) = cleaned_instructions
+      .split(" ")
+      .filter(|s| s != &"")
+      .collect_tuple()
+      .unwrap();
 
-        let current_dir = match dir {
-            "U" => NORTH,
-            "D" => SOUTH,
-            "L" => WEST,
-            "R" => EAST,
-            _ => panic!("Invalid direction argument passed: {}", dir),
-        };
+    let current_dir = match dir {
+      "U" => NORTH,
+      "D" => SOUTH,
+      "L" => WEST,
+      "R" => EAST,
+      _ => panic!("Invalid direction argument passed: {}", dir),
+    };
 
-        for _ in 0..distance.parse::<usize>().unwrap() {
-            current_pos = v_add(current_pos, current_dir);
-            edge_set.insert(current_pos);
+    for _ in 0..distance.parse::<usize>().unwrap() {
+      current_pos = v_add(current_pos, current_dir);
+      edge_set.insert(current_pos);
+    }
+  }
+
+  let mut to_explore: Vec<Vector2D> = vec![(1, 1)];
+  let mut explored: Vec<Vector2D> = Vec::from_iter(edge_set.iter().map(|v| *v));
+
+  while to_explore.len() > 0 {
+    let current = to_explore.pop().unwrap();
+
+    vec![
+      v_add(current, NORTH),
+      v_add(current, SOUTH),
+      v_add(current, EAST),
+      v_add(current, WEST),
+    ]
+    .iter()
+    .for_each(|pos| {
+      if !to_explore.contains(pos) && !explored.contains(pos) {
+        to_explore.push(*pos);
+        if explored.len() % 100 == 0 {
+          println!("Explored: {}", explored.len())
         }
-    }
+      }
+    });
 
-    let mut to_explore: Vec<Vector2D> = vec![(1, 1)];
-    let mut explored: Vec<Vector2D> = Vec::from_iter(edge_set.iter().map(|v| *v));
+    explored.push(current);
+  }
 
-    while to_explore.len() > 0 {
-        let current = to_explore.pop().unwrap();
-
-        vec![
-            v_add(current, NORTH),
-            v_add(current, SOUTH),
-            v_add(current, EAST),
-            v_add(current, WEST),
-        ]
-        .iter()
-        .for_each(|pos| {
-            if !to_explore.contains(pos) && !explored.contains(pos) {
-                to_explore.push(*pos);
-                if explored.len() % 100 == 0 {
-                    println!("Explored: {}", explored.len())
-                }
-            }
-        });
-
-        explored.push(current);
-    }
-
-    explored.len()
+  explored.len()
 }

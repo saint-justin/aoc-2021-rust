@@ -39,13 +39,13 @@ use regex::Regex;
 /// strongest to weakest and multiplying the "bid" of each hand
 /// by its final rank. What are your total winnings?
 pub fn find_camel_poker_winnings(hand_inputs: &Vec<&str>) -> u32 {
-    let mut hands = hand_inputs.iter().map(|s| Hand::from_str(s)).collect_vec();
+  let mut hands = hand_inputs.iter().map(|s| Hand::from_str(s)).collect_vec();
 
-    hands.sort_by(|a, b| a.compare(b, false));
+  hands.sort_by(|a, b| a.compare(b, false));
 
-    return hands.iter().enumerate().fold(0, |acc, (i, hand)| {
-        return acc + (hand.bid * (u32::try_from(i).unwrap() + 1));
-    });
+  return hands.iter().enumerate().fold(0, |acc, (i, hand)| {
+    return acc + (hand.bid * (u32::try_from(i).unwrap() + 1));
+  });
 }
 
 /// Day 7, Part 2
@@ -60,95 +60,95 @@ pub fn find_camel_poker_winnings(hand_inputs: &Vec<&str>) -> u32 {
 ///
 /// Given these adjustments, what are your new total winnings?
 pub fn hand_winnings_with_jokers(hand_inputs: &Vec<&str>) -> u32 {
-    let mut hands = hand_inputs
-        .iter()
-        .map(|s| Hand::from_str_wild(s))
-        .collect_vec();
+  let mut hands = hand_inputs
+    .iter()
+    .map(|s| Hand::from_str_wild(s))
+    .collect_vec();
 
-    hands.sort_by(|a, b| a.compare(b, true));
+  hands.sort_by(|a, b| a.compare(b, true));
 
-    return hands.iter().enumerate().fold(0, |acc, (i, hand)| {
-        return acc + (hand.bid * (u32::try_from(i).unwrap() + 1));
-    });
+  return hands.iter().enumerate().fold(0, |acc, (i, hand)| {
+    return acc + (hand.bid * (u32::try_from(i).unwrap() + 1));
+  });
 }
 
 #[derive(Debug, Eq, PartialEq, PartialOrd, Clone)]
 enum HandType {
-    HighCard = 0,
-    TwoOfAKind,   // 1
-    TwoPair,      // 2
-    ThreeOfAKind, // etc.
-    FullHouse,
-    FourOfAKind,
-    FiveOfAKind,
+  HighCard = 0,
+  TwoOfAKind,   // 1
+  TwoPair,      // 2
+  ThreeOfAKind, // etc.
+  FullHouse,
+  FourOfAKind,
+  FiveOfAKind,
 }
 
 #[derive(Debug, Clone)]
 struct Hand {
-    cards: Vec<String>,
-    hand_type: HandType,
-    bid: u32,
+  cards: Vec<String>,
+  hand_type: HandType,
+  bid: u32,
 }
 
 impl Hand {
-    pub fn from_str(s: &str) -> Hand {
-        let parts = s.split(" ").collect_vec();
-        Hand {
-            cards: parts[0]
-                .split("")
-                .map(|s| s.to_owned())
-                .filter(|s| s != "")
-                .collect_vec(),
-            hand_type: Hand::parse_hand_type(parts[0]),
-            bid: parts[1].parse().unwrap(),
-        }
+  pub fn from_str(s: &str) -> Hand {
+    let parts = s.split(" ").collect_vec();
+    Hand {
+      cards: parts[0]
+        .split("")
+        .map(|s| s.to_owned())
+        .filter(|s| s != "")
+        .collect_vec(),
+      hand_type: Hand::parse_hand_type(parts[0]),
+      bid: parts[1].parse().unwrap(),
+    }
+  }
+
+  pub fn from_str_wild(s: &str) -> Hand {
+    let parts = s.split(" ").collect_vec();
+    let re = Regex::new(r"(J)").unwrap();
+    let cards_jacks_stripped = re.replace_all(parts[0], "");
+    let mut default_hand = Hand {
+      cards: parts[0]
+        .split("")
+        .map(|s| s.to_owned())
+        .filter(|s| s != "")
+        .collect_vec(),
+      hand_type: Hand::parse_hand_type(&cards_jacks_stripped),
+      bid: parts[1].parse().unwrap(),
+    };
+    for _i in 0..parts[0].split("").filter(|s| s == &"J").count() {
+      default_hand.upgrade()
     }
 
-    pub fn from_str_wild(s: &str) -> Hand {
-        let parts = s.split(" ").collect_vec();
-        let re = Regex::new(r"(J)").unwrap();
-        let cards_jacks_stripped = re.replace_all(parts[0], "");
-        let mut default_hand = Hand {
-            cards: parts[0]
-                .split("")
-                .map(|s| s.to_owned())
-                .filter(|s| s != "")
-                .collect_vec(),
-            hand_type: Hand::parse_hand_type(&cards_jacks_stripped),
-            bid: parts[1].parse().unwrap(),
-        };
-        for _i in 0..parts[0].split("").filter(|s| s == &"J").count() {
-            default_hand.upgrade()
-        }
+    return default_hand;
+  }
 
-        return default_hand;
+  pub fn parse_hand_type(hand: &str) -> HandType {
+    let mut letter_map: HashMap<char, i32> = HashMap::new();
+    for ch in hand.chars().collect::<Vec<char>>() {
+      *letter_map.entry(ch).or_insert(0) += 1;
     }
+    let counts = letter_map.values().collect_vec();
 
-    pub fn parse_hand_type(hand: &str) -> HandType {
-        let mut letter_map: HashMap<char, i32> = HashMap::new();
-        for ch in hand.chars().collect::<Vec<char>>() {
-            *letter_map.entry(ch).or_insert(0) += 1;
-        }
-        let counts = letter_map.values().collect_vec();
-
-        if counts.contains(&&5) {
-            return HandType::FiveOfAKind;
-        } else if counts.contains(&&4) {
-            return HandType::FourOfAKind;
-        } else if counts.contains(&&3) && counts.contains(&&2) {
-            return HandType::FullHouse;
-        } else if counts.contains(&&3) {
-            return HandType::ThreeOfAKind;
-        } else if counts.iter().filter(|n| n == &&&2).count() == 2 {
-            return HandType::TwoPair;
-        } else if counts.contains(&&2) {
-            return HandType::TwoOfAKind;
-        }
-        return HandType::HighCard;
+    if counts.contains(&&5) {
+      return HandType::FiveOfAKind;
+    } else if counts.contains(&&4) {
+      return HandType::FourOfAKind;
+    } else if counts.contains(&&3) && counts.contains(&&2) {
+      return HandType::FullHouse;
+    } else if counts.contains(&&3) {
+      return HandType::ThreeOfAKind;
+    } else if counts.iter().filter(|n| n == &&&2).count() == 2 {
+      return HandType::TwoPair;
+    } else if counts.contains(&&2) {
+      return HandType::TwoOfAKind;
     }
+    return HandType::HighCard;
+  }
 
     #[rustfmt::skip]
-    pub fn upgrade(&mut self) {
+  pub fn upgrade(&mut self) {
         match self.hand_type {
             HandType::HighCard =>     self.hand_type = HandType::TwoOfAKind,
             HandType::TwoOfAKind =>   self.hand_type = HandType::ThreeOfAKind,
@@ -161,7 +161,7 @@ impl Hand {
     }
 
     #[rustfmt::skip]
-    pub fn compare(&self, other: &Hand, wild: bool) -> Ordering {
+  pub fn compare(&self, other: &Hand, wild: bool) -> Ordering {
         if self.hand_type != other.hand_type {
             if self.hand_type > other.hand_type {
                 return Ordering::Greater;
@@ -187,9 +187,9 @@ impl Hand {
 
 // Helpers for comparing positions
 fn card_value(s: &str) -> usize {
-    "23456789TJQKA".find(s).unwrap()
+  "23456789TJQKA".find(s).unwrap()
 }
 
 fn wild_value(s: &str) -> usize {
-    "J23456789TQKA".find(s).unwrap()
+  "J23456789TQKA".find(s).unwrap()
 }

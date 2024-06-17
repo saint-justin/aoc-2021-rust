@@ -30,71 +30,71 @@ use regex::Regex;
 ///
 /// What is the sum of all arrangements for every line of the input?
 pub fn find_arrangement_sum(report: &Vec<&str>) -> u32 {
-    let re_arrangement = Regex::new(r"([?.#]{1,})").unwrap();
-    let re_broken = Regex::new(r"([#]{1,})").unwrap();
-    let re_quantities = Regex::new(r"([0-9]{1,})").unwrap();
-    let mut arrangement_sum: u32 = 0;
+  let re_arrangement = Regex::new(r"([?.#]{1,})").unwrap();
+  let re_broken = Regex::new(r"([#]{1,})").unwrap();
+  let re_quantities = Regex::new(r"([0-9]{1,})").unwrap();
+  let mut arrangement_sum: u32 = 0;
 
-    for (i, line) in report.iter().enumerate() {
-        // This solution is brute forced so giving user an output for completion percentage helps
-        if i % 10 == 0 {
-            println!("{:.1}% complete ", (i as f32 / report.len() as f32) * 100.0)
-        };
+  for (i, line) in report.iter().enumerate() {
+    // This solution is brute forced so giving user an output for completion percentage helps
+    if i % 10 == 0 {
+      println!("{:.1}% complete ", (i as f32 / report.len() as f32) * 100.0)
+    };
 
-        let arrangement = re_arrangement.find(line).unwrap().as_str();
+    let arrangement = re_arrangement.find(line).unwrap().as_str();
 
-        let quantities = re_quantities
-            .find_iter(line)
-            .map(|m| m.as_str().parse::<usize>().unwrap())
-            .collect_vec();
+    let quantities = re_quantities
+      .find_iter(line)
+      .map(|m| m.as_str().parse::<usize>().unwrap())
+      .collect_vec();
 
-        let unknown_indices = arrangement
-            .split("")
-            .filter(|s| s != &"")
-            .enumerate()
-            .filter(|(_, s)| s == &"?")
-            .map(|(i, _)| i)
-            .collect_vec();
+    let unknown_indices = arrangement
+      .split("")
+      .filter(|s| s != &"")
+      .enumerate()
+      .filter(|(_, s)| s == &"?")
+      .map(|(i, _)| i)
+      .collect_vec();
 
-        // splice in each filler and test if its valid
-        let fillers = build_filler_iterations(unknown_indices.len());
-        for filler in fillers {
-            let mut new_arrangement = arrangement.to_owned();
-            for (i, target) in unknown_indices.iter().enumerate() {
-                let replacement_char = &filler.chars().nth(i).unwrap().to_string();
-                new_arrangement.replace_range(target..&(target + 1), replacement_char)
-            }
-            if is_valid(&new_arrangement, &quantities, &re_broken) {
-                arrangement_sum += 1;
-            }
-        }
+    // splice in each filler and test if its valid
+    let fillers = build_filler_iterations(unknown_indices.len());
+    for filler in fillers {
+      let mut new_arrangement = arrangement.to_owned();
+      for (i, target) in unknown_indices.iter().enumerate() {
+        let replacement_char = &filler.chars().nth(i).unwrap().to_string();
+        new_arrangement.replace_range(target..&(target + 1), replacement_char)
+      }
+      if is_valid(&new_arrangement, &quantities, &re_broken) {
+        arrangement_sum += 1;
+      }
     }
+  }
 
-    return arrangement_sum;
+  return arrangement_sum;
 }
 
 // Helper fn to determine if a given arrangment matches its broken spring quantities
 fn is_valid(arrangement: &str, quantities: &Vec<usize>, re: &Regex) -> bool {
-    let arrangement_vec = re
-        .find_iter(arrangement)
-        .map(|m| m.as_str().len())
-        .collect_vec();
-    &arrangement_vec == quantities
+  let arrangement_vec = re
+    .find_iter(arrangement)
+    .map(|m| m.as_str().len())
+    .collect_vec();
+  &arrangement_vec == quantities
 }
 
 // Helper that builds all potential fillers for size needed
 #[cached]
 fn build_filler_iterations(filler_count: usize) -> Vec<String> {
-    let mut variations: Vec<String> = Vec::new();
-    variations.push(".".to_owned());
-    variations.push("#".to_owned());
-    for _ in 1..filler_count {
-        let mut new_variations: Vec<String> = Vec::new();
-        for variation in variations {
-            new_variations.push(format!("{}.", variation));
-            new_variations.push(format!("{}#", variation));
-        }
-        variations = new_variations;
+  let mut variations: Vec<String> = Vec::new();
+  variations.push(".".to_owned());
+  variations.push("#".to_owned());
+  for _ in 1..filler_count {
+    let mut new_variations: Vec<String> = Vec::new();
+    for variation in variations {
+      new_variations.push(format!("{}.", variation));
+      new_variations.push(format!("{}#", variation));
     }
-    return variations;
+    variations = new_variations;
+  }
+  return variations;
 }

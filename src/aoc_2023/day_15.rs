@@ -19,7 +19,7 @@ use regex::Regex;
 ///
 /// What is the sum of HASHing your inputs?
 pub fn sum_hash_results(input: &Vec<&str>) -> u32 {
-    input[0].split(",").map(|seq| hash(seq)).sum()
+  input[0].split(",").map(|seq| hash(seq)).sum()
 }
 
 /// Day 15, Part 2
@@ -67,73 +67,74 @@ pub fn sum_hash_results(input: &Vec<&str>) -> u32 {
 ///
 /// What's the focusing power of the entire lens array?
 pub fn find_focusing_power(input: &Vec<&str>) -> u32 {
-    let re_opchar = Regex::new(r"([-=]{1})").unwrap();
-    let mut lens_boxes: Vec<OrderedMap<String, u32>> = vec![OrderedMap::new(); 256];
+  let re_opchar = Regex::new(r"([-=]{1})").unwrap();
+  let mut lens_boxes: Vec<OrderedMap<String, u32>> = vec![OrderedMap::new(); 256];
 
-    for step in input[0].split(",") {
-        let opchar = re_opchar.find(step).unwrap().as_str();
-        let parts = step.split(opchar).filter(|s| s != &"").collect_vec();
-        let hash = hash(parts[0]) as usize;
-        match opchar {
-            "=" => lens_boxes[hash].insert(parts[0].to_owned(), parts[1].parse::<u32>().unwrap()),
-            "-" => lens_boxes[hash].remove(parts[0].to_owned()),
-            _ => panic!("Invalid operation character!"),
-        };
+  for step in input[0].split(",") {
+    let opchar = re_opchar.find(step).unwrap().as_str();
+    let parts = step.split(opchar).filter(|s| s != &"").collect_vec();
+    let hash = hash(parts[0]) as usize;
+    match opchar {
+      "=" => lens_boxes[hash].insert(parts[0].to_owned(), parts[1].parse::<u32>().unwrap()),
+      "-" => lens_boxes[hash].remove(parts[0].to_owned()),
+      _ => panic!("Invalid operation character!"),
+    };
+  }
+
+  let mut focusing_power = 0;
+  for i in 0..lens_boxes.len() {
+    for j in 0..lens_boxes[i].pairs.len() {
+      focusing_power += (i + 1) as u32 * (j + 1) as u32 * lens_boxes[i].pairs[j].1;
     }
+  }
 
-    let mut focusing_power = 0;
-    for i in 0..lens_boxes.len() {
-        for j in 0..lens_boxes[i].pairs.len() {
-            focusing_power += (i + 1) as u32 * (j + 1) as u32 * lens_boxes[i].pairs[j].1;
-        }
-    }
-
-    return focusing_power;
+  return focusing_power;
 }
 
 #[derive(Debug, Clone)]
 struct OrderedMap<T: std::cmp::PartialEq + Clone, U: std::cmp::PartialEq + Clone> {
-    pairs: Vec<(T, U)>,
+  pairs: Vec<(T, U)>,
 }
 
 impl<T: std::cmp::PartialEq + Clone, U: std::cmp::PartialEq + Clone> OrderedMap<T, U> {
-    pub fn new() -> OrderedMap<T, U> {
-        OrderedMap { pairs: Vec::new() }
-    }
+  pub fn new() -> OrderedMap<T, U> {
+    OrderedMap { pairs: Vec::new() }
+  }
 
-    pub fn keys(&self) -> Vec<T> {
-        self.pairs.iter().map(|p| p.0.clone()).collect_vec()
-    }
+  pub fn keys(&self) -> Vec<T> {
+    self.pairs.iter().map(|p| p.0.clone()).collect_vec()
+  }
 
-    pub fn insert(&mut self, key: T, value: U) {
-        if self.keys().contains(&key) {
-            let i = self.key_index(key);
-            self.pairs[i].1 = value;
-        } else {
-            self.pairs.push((key, value));
-        }
+  pub fn insert(&mut self, key: T, value: U) {
+    if self.keys().contains(&key) {
+      let i = self.key_index(key);
+      self.pairs[i].1 = value;
+    } else {
+      self.pairs.push((key, value));
     }
+  }
 
-    pub fn remove(&mut self, key: T) {
-        if self.keys().contains(&key) {
-            let removed_index = self.key_index(key);
-            self.pairs.remove(removed_index);
-        }
+  pub fn remove(&mut self, key: T) {
+    if self.keys().contains(&key) {
+      let removed_index = self.key_index(key);
+      self.pairs.remove(removed_index);
     }
+  }
 
-    fn key_index(&mut self, key: T) -> usize {
-        self.pairs
-            .iter()
-            .enumerate()
-            .filter(|(_, (k, _))| k == &key)
-            .collect_vec()[0]
-            .0
-    }
+  fn key_index(&mut self, key: T) -> usize {
+    self
+      .pairs
+      .iter()
+      .enumerate()
+      .filter(|(_, (k, _))| k == &key)
+      .collect_vec()[0]
+      .0
+  }
 }
 
 // HASH the value of a given string
 fn hash(s: &str) -> u32 {
-    s.chars()
-        .into_iter()
-        .fold(0, |acc, ch| ((acc + ch as u32) * 17) % 256)
+  s.chars()
+    .into_iter()
+    .fold(0, |acc, ch| ((acc + ch as u32) * 17) % 256)
 }
