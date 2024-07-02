@@ -92,7 +92,7 @@ pub fn find_frequency_product(input_modules: &Vec<&str>) -> u64 {
 
   let mut low_pulses = 0;
   let mut high_pulses = 0;
-  for i in 0..1000 {
+  for _i in 0..1000 {
     if let Some((low, high)) = press_button(&mut modules) {
       low_pulses += low;
       high_pulses += high;

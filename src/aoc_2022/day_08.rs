@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 #[derive(Debug, Clone, Copy)]
 struct Score(usize, usize, usize, usize);
 

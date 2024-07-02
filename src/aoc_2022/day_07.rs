@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use std::collections::HashMap;
 
 #[derive(Debug, Clone)]
@@ -36,8 +37,8 @@ struct Directory<'a> {
 /// ```
 pub fn find_sum_dirs_under_100000(cli_dump: &Vec<&str>) {
   let mut directory: HashMap<String, Box<Directory>> = HashMap::new();
-  let mut current: Box<String> = Box::from("/".to_owned());
-  let mut root_dir = Directory {
+  let current: Box<String> = Box::from("/".to_owned());
+  let root_dir = Directory {
     parent: &"".to_owned(),
     name: "/".to_owned(),
     dirs: vec![],

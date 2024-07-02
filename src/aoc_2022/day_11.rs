@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 #[derive(Debug, Default, Clone, PartialEq)]
 enum Operation {
   #[default]
@@ -110,11 +111,13 @@ fn calculate_specific_monkey_business(monkeys: &Vec<Monkey>) -> usize {
 }
 
 /// Pulls the tail word off a sentence by spaces
+#[allow(dead_code)]
 fn get_last_word(s: &str) -> &str {
   s.split(" ").collect::<Vec<&str>>().pop().unwrap()
 }
 
 /// Returns a tuple of (monkey_location, item_value)
+#[allow(dead_code)]
 fn get_next_item_location(item: usize, monkey: &Monkey, anxiety_calms: bool) -> (usize, usize) {
   let mut new_item_value;
   match monkey.operation {
@@ -137,14 +140,13 @@ fn get_next_item_location(item: usize, monkey: &Monkey, anxiety_calms: bool) -> 
 }
 
 /// Parses monkey data from input vec of strings into a vec of monkeys
+#[allow(dead_code)]
 fn parse_monkeys(monkey_notes: &Vec<&str>) -> Vec<Monkey> {
-  let mut monkey_number = 0;
   let mut monkeys: Vec<Monkey> = Vec::new();
   let mut monkey_template = Monkey::default();
 
   for line in monkey_notes {
     if line.len() == 0 {
-      monkey_number += 1;
       monkeys.push(monkey_template.clone());
       monkey_template = Monkey::default();
       continue;

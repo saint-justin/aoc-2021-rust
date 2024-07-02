@@ -1,3 +1,6 @@
+#![allow(dead_code)]
+
+
 /// Day 10 Part 1 -- https://adventofcode.com/2022/day/10
 ///
 /// Input is a series of instructions for a computer where something happens

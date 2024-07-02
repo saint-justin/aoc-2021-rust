@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 /// Day 4, Part 1 -- https://adventofcode.com/2020/day/4
 ///
 /// You made it to the airport! However, you just realized that
@@ -104,6 +106,7 @@ impl Passport {
     return properties.iter().all(|property| property.is_some());
   }
 
+  #[allow(dead_code)]
   pub fn is_valid_strict(&self) -> bool {
     let properties: Vec<&Option<String>> = vec![
       &self.byr, &self.iyr, &self.eyr, &self.hgt, &self.hcl, &self.ecl, &self.pid,

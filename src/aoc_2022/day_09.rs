@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use std::{
   collections::{HashMap, HashSet},
   ops::{AddAssign, Sub},
@@ -51,7 +53,7 @@ pub fn find_tail_positions(head_movements: &Vec<&str>) {
 /// Same input as part 1, except this time around you need to track
 /// 10 segments of rope (including head + tail) instead of
 pub fn find_tail_positions_with_extra_lengths(head_movements: &Vec<&str>) {
-  let mut position_set: HashSet<Position> = HashSet::from([Position(0, 0)]);
+  let position_set: HashSet<Position> = HashSet::from([Position(0, 0)]);
   let mut all_knots: Vec<Position> = Vec::new();
   for _ in 0..10 {
     all_knots.push(Position(0, 0));
@@ -66,7 +68,7 @@ pub fn find_tail_positions_with_extra_lengths(head_movements: &Vec<&str>) {
     let direction = movement_dict.get(args[0]).unwrap();
 
     for _ in 0..String::from(args[1]).parse::<i16>().unwrap() {
-      let mut pos_diff = direction;
+      let pos_diff = direction;
       all_knots[0] += *pos_diff;
       // Iterate over each knot
       for i in 0..9 {

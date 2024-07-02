@@ -64,18 +64,18 @@ pub fn find_steps_to_zzz(directions: &Vec<&str>) -> usize {
 pub fn ghost_traverse_to_exit_steps(directions: &Vec<&str>) -> usize {
   let lr_directions = directions[0].split("").filter(|s| s != &"").collect_vec();
   let map = parse_map(directions);
-  let mut positions = map
+  let positions = map
     .keys()
     .filter(|s| s.chars().last().unwrap() == 'A')
     .collect_vec();
 
-  let mut steps = 0;
+  let steps = 0;
 
   let out = positions
     .iter()
     .map(|pos| {
       let mut all_positions: Vec<String> = Vec::new();
-      let mut current = pos.clone();
+      let mut current = *pos;
 
       let mut step = 0;
       while !all_positions.contains(&format!(

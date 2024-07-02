@@ -33,6 +33,7 @@ use itertools::Itertools;
 /// sum. For each horizontal reflection, add the amount of rows
 /// above it multiplied by 100 to the point sum. What's the
 /// point total of all patterns in the input?
+#[allow(dead_code)]
 pub fn find_reflection_summary(all_patterns: &Vec<&str>) -> u32 {
   let mut separated_maps: Vec<Vec<String>> = Vec::new();
   let mut temp_map: Vec<String> = Vec::new();

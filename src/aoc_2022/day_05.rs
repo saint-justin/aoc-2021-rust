@@ -82,7 +82,6 @@ fn parse_initial_stacks(input: &Vec<&str>) -> Vec<Vec<String>> {
 }
 
 fn calculate_stack_height(input: &Vec<&str>) -> usize {
-  let mut max_stack_height = 0;
   for i in 0..input.len() {
     if input[i].len() == 1 {
       return i - 1;

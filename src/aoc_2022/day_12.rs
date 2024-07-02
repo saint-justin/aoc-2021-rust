@@ -1,6 +1,7 @@
 #[derive(Debug)]
 struct Position(usize, usize);
 
+#[allow(dead_code)]
 pub fn find_shortest_path(heightmap: &Vec<&str>) {
   let ref_str = String::from("SEabcdefghijklmnopqrstuvwxyz");
   let typed_heightmap: Vec<Vec<usize>> = heightmap
@@ -43,7 +44,7 @@ pub fn find_shortest_path(heightmap: &Vec<&str>) {
 
   // BFS Implementation
   let mut to_explore: Vec<Position> = vec![start_pos];
-  let mut visited: Vec<Position> = vec![];
+  let _visited: Vec<Position> = vec![];
 
   while !to_explore.is_empty() {
     let current = to_explore.pop().unwrap();
