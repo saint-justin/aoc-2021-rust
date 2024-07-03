@@ -1,5 +1,6 @@
 use std::{env, fs};
 
+mod aoc_2019;
 mod aoc_2020;
 mod aoc_2021;
 mod aoc_2022;
@@ -24,6 +25,7 @@ fn main() {
   let puzzle_input: Vec<&str> = input_contents.split(['\n']).map(|e| e.trim()).collect();
 
   match year_number {
+    2019 => aoc_2019::run_day_number(day_number, &puzzle_input),
     2020 => aoc_2020::run_day_number(day_number, &puzzle_input),
     2021 => aoc_2021::run_day_number(day_number, &puzzle_input),
     2022 => aoc_2022::run_day_number(day_number, &puzzle_input),
