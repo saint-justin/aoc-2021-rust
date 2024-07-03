@@ -12,6 +12,19 @@ pub fn find_fuel_requirements(modules: &Vec<&str>) -> i32 {
     .sum()
 }
 
+/// Day 1, Part 2
+/// 
+/// So it turns out, the list of module masses was right but it 
+/// didn't take into account the weight of the gas being added. 
+/// To account for the weight of gas needed for gas, take the 
+/// weight of the gas being added, divide it by 3, and add 2. 
+/// Then do that again for any further gas added.
+/// 
+/// If the remainder gas is 2 or less, it's going to need 0 additional
+/// gas to account for it. Mass can't be negative, so if you hit
+/// a negative, just assume 0 additional.
+/// 
+/// How much gas is needed?
 pub fn find_fuel_requirements_rec(modules: &Vec<&str>) -> i32 {
   modules.iter()
     .map(|mass| recursive_fuel_req_for_mass(mass.parse::<i32>().unwrap()))
